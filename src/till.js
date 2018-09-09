@@ -1,28 +1,28 @@
-const scan = (barcode, items) => {
+function Till(){
+  this.products = [];
+  this.basket = [];
+};
+
+Till.prototype.scan = function(barcode){
   return items.find((item) => {
     return item.barcode === barcode;
   });
 }
 
-const addToBasket = (item, basket) => {
-  basket.push(item);
+Till.prototype.addToBasket = function(item){
+  this.basket.push(item);
 }
 
-const totalPrice = (basket) => {
-  return basket.reduce((total, item) => {
+Till.prototype.totalPrice = function(){
+  return this.basket.reduce((total, item) => {
     return total + item.price;
   }, 0);
 }
 
-const removeFromBasket = (barcode, basket) => {
-  const item = scan(barcode, basket);
-  const index = basket.indexOf(item);
-  basket.splice(index, 1);
+Till.prototype.removeFromBasket = function(barcode){
+  const item = scan(barcode, this.basket);
+  const index = this.basket.indexOf(item);
+  this.basket.splice(index, 1);
 }
 
-module.exports = {
-  scan,
-  addToBasket,
-  totalPrice,
-  removeFromBasket,
-};
+module.exports = Till;
