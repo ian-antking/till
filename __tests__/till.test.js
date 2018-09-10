@@ -1,65 +1,47 @@
-const {
-  addToBasket,
-  totalPrice,
-  scan,
-  removeFromBasket,
-} = require('../src/till');
+const Till = require('../src/till');
 
-const apple = {
-  barcode: 123,
-  price: 5,
-};
+let till = null;
 
-const banana = {
-  barcode: 456,
-  price: 6
-};
+beforeEach(() => {
+  till = new Till();
+});
 
-const orange = {
-  barcode: 789,
-  price: 7,
-};
-
-const pineapple = {
-  barcode: 5367,
-  price: 80,
-};
-
-const kiwi = {
-  barcode: 765,
-  price: 25,
-};
-
-const items = [
-  apple,
-  banana,
-  orange,
-  pineapple,
-  kiwi, 
-];
+test('New till is an object', () => {
+  expect(till).toBeInstanceOf(Object);
+});
 
 test('scan finds an item by its barcode', () => {
-  expect(scan(456, items)).toEqual(banana);
+  expect(till.scan(456)).toEqual({name: 'banana', barcode: 456, price: 6,});
 });
 
 test('addToBasket adds an item to the basket', () => {
-  const basket = [];
-
-  addToBasket(kiwi, basket);
-
-  expect(basket).toContain(kiwi);
+  till.addToBasket(756);
+  expect(till.basket[0].name).toBe('kiwi');
 });
 
-test('totalPrice gets the total price of items in the basket', () => {
-  const basket = [orange, orange, pineapple];
+test('Basket can hold array of products', ()=> {
+  const purchases = [123, 456, 789, 5367, 756];
+  const results = ['apple', 'banana', 'orange', 'pineapple', 'kiwi']
+  purchases.map(purchase => {
+    till.scan(purchase);
+  });
 
-  expect(totalPrice(basket)).toEqual(94);
+  for(let i = 0; i < till.basket.length; i++){
+    expect(till.basket[i].name).toBe(results[i]);
+  };
+
 });
 
-test('removeFromBasket removes the item with the given barcode from the basket', () => {
-  const basket = [kiwi, orange, pineapple];
+// test('totalPrice gets the total price of items in the basket', () => {
+//   const basket = [orange, orange, pineapple];
 
-  removeFromBasket(789, basket);
+//   expect(totalPrice(basket)).toEqual(94);
+// });
 
-  expect(basket).not.toContain(orange);
-});
+// test('removeFromBasket removes the item with the given barcode from the basket', () => {
+//   const basket = [kiwi, orange, pineapple];
+
+//   removeFromBasket(789, basket);
+
+//   expect(basket).not.toContain(orange);
+// });
