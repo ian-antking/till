@@ -19,6 +19,10 @@ test('addToBasket adds an item to the basket', () => {
   expect(till.basket[0].name).toBe('kiwi');
 });
 
+test('addToBasket throws error if scan returns undefined', () => {
+  expect(() => {till.addToBasket(123456789)}).toThrow('Product not found')
+});
+
 test('Basket can hold array of products', ()=> {
   const purchases = [123, 456, 789, 5367, 756];
   const results = ['apple', 'banana', 'orange', 'pineapple', 'kiwi']
@@ -32,11 +36,14 @@ test('Basket can hold array of products', ()=> {
 
 });
 
-// test('totalPrice gets the total price of items in the basket', () => {
-//   const basket = [orange, orange, pineapple];
+test('totalPrice gets the total price of items in the basket', () => {
+  const purchases = [123, 456, 789, 5367, 756];
+  purchases.forEach(purchase => {
+    till.addToBasket(purchase);
+  });
 
-//   expect(totalPrice(basket)).toEqual(94);
-// });
+  expect(till.totalPrice()).toEqual(123);
+});
 
 // test('removeFromBasket removes the item with the given barcode from the basket', () => {
 //   const basket = [kiwi, orange, pineapple];

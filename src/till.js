@@ -36,7 +36,11 @@ Till.prototype.scan = function(barcode){
 }
 
 Till.prototype.addToBasket = function(barcode){
+  if(!this.scan(barcode)){
+    throw new Error('Product not found');
+  }else{
   this.basket.push(this.scan(barcode));
+  }
 }
 
 Till.prototype.totalPrice = function(){
