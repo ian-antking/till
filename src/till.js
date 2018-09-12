@@ -50,7 +50,7 @@ Till.prototype.totalPrice = function(){
 }
 
 Till.prototype.removeFromBasket = function(barcode){
-  const item = scan(barcode, this.basket);
+  const item = this.scan(barcode);
   const index = this.basket.indexOf(item);
   this.basket.splice(index, 1);
 }

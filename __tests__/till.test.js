@@ -45,10 +45,10 @@ test('totalPrice gets the total price of items in the basket', () => {
   expect(till.totalPrice()).toEqual(123);
 });
 
-// test('removeFromBasket removes the item with the given barcode from the basket', () => {
-//   const basket = [kiwi, orange, pineapple];
+test('removeFromBasket removes the item with the given barcode from the basket', () => {
+  till.addToBasket(789);
 
-//   removeFromBasket(789, basket);
+  till.removeFromBasket(789);
 
-//   expect(basket).not.toContain(orange);
-// });
+  expect(till.basket).not.toContain({name: 'orange', barcode: '789', price: '7'});
+});
