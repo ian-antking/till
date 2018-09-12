@@ -45,10 +45,14 @@ test('totalPrice gets the total price of items in the basket', () => {
   expect(till.totalPrice()).toEqual(123);
 });
 
-test('removeFromBasket removes the item with the given barcode from the basket', () => {
+test('removeFromBasket() removes the item with the given barcode from the basket', () => {
   till.addToBasket(789);
 
   till.removeFromBasket(789);
 
   expect(till.basket).not.toContain({name: 'orange', barcode: '789', price: '7'});
+});
+
+test('removeFromBasket() throws an error if item is not in basket', () => {
+  expect(() => {till.removeFromBasket(789)}).toThrow('Product not in basket');
 });

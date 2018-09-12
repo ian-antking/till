@@ -52,7 +52,11 @@ Till.prototype.totalPrice = function(){
 Till.prototype.removeFromBasket = function(barcode){
   const item = this.scan(barcode);
   const index = this.basket.indexOf(item);
+  if(index === -1){
+    throw new Error('Product not in basket');
+  }else{
   this.basket.splice(index, 1);
+  };
 }
 
 module.exports = Till;
